@@ -14,7 +14,7 @@ export const buildCommandForRails = async (relativeFilePath: string, context: vs
 export const buildCommandForJs = async (relativeFilePath: string, context: vscode.ExtensionContext) => {
 	const updateSnapshots = await vscode.window.showQuickPick(['No', 'Yes'], { placeHolder: 'Update snapshots?' });
 	let command = updateSnapshots === 'Yes' ? 'npm run test:unit -- -u ' : 'npm run test:unit -- ';
-	const isTestFile = relativeFilePath.includes('.test.');
+	const isTestFile = relativeFilePath.includes('.test.') || relativeFilePath.includes('.spec.');
 	const finalPath = isTestFile ? relativeFilePath : await tryOtherJsPath(context);
 	if (!finalPath) {
 		vscode.window.showErrorMessage('Current file is not a test file, and no path was selected from history');
